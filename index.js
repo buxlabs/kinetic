@@ -120,7 +120,7 @@ class Kinetic {
   }
 
   _getTouches (e) {
-    return e.originalEvent.touches || e.originalEvent.changedTouches
+    return (e.originalEvent && (e.originalEvent.touches || e.originalEvent.changedTouches)) || e.changedTouches
   }
 
   _initEvents () {
