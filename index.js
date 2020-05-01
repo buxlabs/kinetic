@@ -26,23 +26,26 @@ const DEFAULTS = {
 }
 
 class Kinetic {
-  constructor(element, settings) {
+  constructor (element, settings) {
     this.settings = Object.assign({}, DEFAULTS, settings)
     this.el = element
     this.ACTIVE_CLASS = 'kinetic-active'
     this._initElements()
     this.el._Kinetic = this
   }
-  start(options) {
+
+  start (options) {
     this.settings = Object.assign(this.settings, options)
     this.velocity = options.velocity || this.velocity
     this.velocityY = options.velocityY || this.velocityY
     this.settings.decelerate = false
     this._move()
   }
+
   end () {
     this.settings.decelerate = true
   }
+
   stop () {
     this.velocity = 0
     this.velocityY = 0
@@ -51,6 +54,7 @@ class Kinetic {
       this.settings.stopped.call(this)
     }
   }
+
   detach () {
     this._detachListeners()
     if (this.document) {
@@ -60,9 +64,11 @@ class Kinetic {
     this.el.classList.remove(this.ACTIVE_CLASS)
     this.el.style.cursor = ''
   }
+
   destroy () {
     this.detach()
   }
+
   attach () {
     if (this.el.classList.contains(this.ACTIVE_CLASS)) {
       return
@@ -71,6 +77,7 @@ class Kinetic {
     this.el.classList.add(this.ACTIVE_CLASS)
     this.el.style.cursor = this.settings.cursor
   }
+
   _initElements () {
     this.el.classList.add(this.ACTIVE_CLASS)
 
@@ -104,14 +111,14 @@ class Kinetic {
     if (this.settings.triggerHardware) {
       var prefixes = ['', '-ms-', '-webkit-', '-moz-']
       var styles = {
-        'transform': 'translate3d(0,0,0)',
-        'perspective': '1000',
+        transform: 'translate3d(0,0,0)',
+        perspective: '1000',
         'backface-visibility': 'hidden'
       }
       for (var i = 0; i < prefixes.length; i++) {
         var prefix = prefixes[i]
         for (var key in styles) {
-          if (styles.hasOwnProperty(key)) {
+          if (Object.prototype.hasOwnProperty.call(styles, key)) {
             this.el.style[prefix + key] = styles[key]
           }
         }
