@@ -1,7 +1,7 @@
-import test from 'ava'
-import puppeteer from 'puppeteer'
-import express from 'express'
-import path from 'path'
+const test = require('ava')
+const puppeteer = require('puppeteer')
+const express = require('express')
+const path = require('path')
 
 test('it is defined', async assert => {
   const app = express()
@@ -37,4 +37,3 @@ test('it is defined', async assert => {
   const content = await page.content()
   assert.truthy(content.includes('index.js'))
 })
-

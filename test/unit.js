@@ -1,6 +1,6 @@
-import test from 'ava'
-import sinon from 'sinon'
-import Kinetic from '../build'
+const test = require('ava')
+const sinon = require('sinon')
+const Kinetic = require('../build')
 
 test('it has a lifecycle', assert => {
   const node = document.createElement('div')
