@@ -37,7 +37,7 @@
     "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-uglify": "^3.0.0",
     "sinon": "^4.5.0",
-    "standard": "^14.3.3"
+    "standard": "^16.0.3"
   },
   "ava": {
     "require": [

@@ -95,7 +95,7 @@ class Kinetic {
     this.velocity = 0
     this.velocityY = 0
 
-    var that = this
+    const that = this
     this.documentResetHandler = function () {
       that._resetMouse.apply(that)
     }
@@ -109,15 +109,15 @@ class Kinetic {
     this.el.style.cursor = this.settings.cursor
 
     if (this.settings.triggerHardware) {
-      var prefixes = ['', '-ms-', '-webkit-', '-moz-']
-      var styles = {
+      const prefixes = ['', '-ms-', '-webkit-', '-moz-']
+      const styles = {
         transform: 'translate3d(0,0,0)',
         perspective: '1000',
         'backface-visibility': 'hidden'
       }
-      for (var i = 0; i < prefixes.length; i++) {
-        var prefix = prefixes[i]
-        for (var key in styles) {
+      for (let i = 0; i < prefixes.length; i++) {
+        const prefix = prefixes[i]
+        for (const key in styles) {
           if (Object.prototype.hasOwnProperty.call(styles, key)) {
             this.el.style[prefix + key] = styles[key]
           }
@@ -131,10 +131,10 @@ class Kinetic {
   }
 
   _initEvents () {
-    var self = this
+    const self = this
     this.settings.events = {
       touchStart: function (e) {
-        var touch
+        let touch
         if (self._useTarget(e.target, e)) {
           touch = self._getTouches(e)[0]
           self.threshold = self._threshold(e.target, e)
@@ -143,7 +143,7 @@ class Kinetic {
         }
       },
       touchMove: function (e) {
-        var touch
+        let touch
         if (self.mouseDown) {
           touch = self._getTouches(e)[0]
           self._inputmove(touch.clientX, touch.clientY)
@@ -231,14 +231,14 @@ class Kinetic {
       this.lastMove = new Date()
 
       if (this.mouseDown && (this.xpos || this.ypos)) {
-        var movedX = (clientX - this.xpos)
-        var movedY = (clientY - this.ypos)
+        let movedX = (clientX - this.xpos)
+        let movedY = (clientY - this.ypos)
         if (this.settings.invert) {
           movedX *= -1
           movedY *= -1
         }
         if (this.threshold > 0) {
-          var moved = Math.sqrt(movedX * movedX + movedY * movedY)
+          const moved = Math.sqrt(movedX * movedX + movedY * movedY)
           if (this.threshold > moved) {
             return
           } else {
@@ -254,8 +254,8 @@ class Kinetic {
         this.settings.decelerate = false
         this.velocity = this.velocityY = 0
 
-        var scrollLeft = this.scrollLeft()
-        var scrollTop = this.scrollTop()
+        const scrollLeft = this.scrollLeft()
+        const scrollTop = this.scrollTop()
 
         this.scrollLeft(this.settings.x ? scrollLeft - movedX : scrollLeft)
         this.scrollTop(this.settings.y ? scrollTop - movedY : scrollTop)
@@ -322,12 +322,11 @@ class Kinetic {
   }
 
   _decelerateVelocity (velocity, slowdown) {
-    return Math.floor(Math.abs(velocity)) === 0 ? 0 // is velocity less than 1?
-      : velocity * slowdown // reduce slowdown
+    return Math.floor(Math.abs(velocity)) === 0 ? 0 : velocity * slowdown // reduce slowdown
   }
 
   _capVelocity (velocity, max) {
-    var newVelocity = velocity
+    let newVelocity = velocity
     if (velocity > 0) {
       if (velocity > max) {
         newVelocity = max
@@ -344,8 +343,8 @@ class Kinetic {
     // The fix-me comment below is from original jQuery.kinetic project
     // FIXME: consider if we want to apply PL #44, this should not remove
     // classes we have not defined on the element!
-    var settings = this.settings
-    var el = this.el
+    const settings = this.settings
+    const el = this.el
 
     el.classList.remove(settings.movingClass.up)
     el.classList.remove(settings.movingClass.down)
@@ -371,15 +370,14 @@ class Kinetic {
   }
 
   _move () {
-    var scroller = this._getScroller()
-    var self = this
-    var settings = this.settings
+    const scroller = this._getScroller()
+    const self = this
+    const settings = this.settings
 
     if (settings.x && scroller.scrollWidth > 0) {
       this.scrollLeft(this.scrollLeft() + this.velocity)
       if (Math.abs(this.velocity) > 0) {
-        this.velocity = settings.decelerate
-          ? self._decelerateVelocity(this.velocity, settings.slowdown) : this.velocity
+        this.velocity = settings.decelerate ? self._decelerateVelocity(this.velocity, settings.slowdown) : this.velocity
       }
     } else {
       this.velocity = 0
@@ -388,8 +386,7 @@ class Kinetic {
     if (settings.y && scroller.scrollHeight > 0) {
       this.scrollTop(this.scrollTop() + this.velocityY)
       if (Math.abs(this.velocityY) > 0) {
-        this.velocityY = settings.decelerate
-          ? self._decelerateVelocity(this.velocityY, settings.slowdown) : this.velocityY
+        this.velocityY = settings.decelerate ? self._decelerateVelocity(this.velocityY, settings.slowdown) : this.velocityY
       }
     } else {
       this.velocityY = 0
@@ -422,7 +419,7 @@ class Kinetic {
   }
 
   scrollLeft (left) {
-    var scroller = this._getScroller()
+    const scroller = this._getScroller()
     if (typeof left === 'number') {
       scroller.scrollLeft = left
       this.settings.scrollLeft = left
@@ -432,7 +429,7 @@ class Kinetic {
   }
 
   scrollTop (top) {
-    var scroller = this._getScroller()
+    const scroller = this._getScroller()
     if (typeof top === 'number') {
       scroller.scrollTop = top
       this.settings.scrollTop = top
