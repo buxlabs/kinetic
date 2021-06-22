@@ -1,5 +1,5 @@
-import babel from 'rollup-plugin-babel'
-import uglify from 'rollup-plugin-uglify'
+import babel from '@rollup/plugin-babel'
+import { terser } from 'rollup-plugin-terser'
 
 export default {
   input: 'index.js',
@@ -10,10 +10,11 @@ export default {
   },
   plugins: [
     babel({
+      babelHelpers: 'bundled',
       exclude: 'node_modules/**',
       presets: [
         [
-          'babel-preset-env',
+          '@babel/preset-env',
           {
             targets: {
               browsers: ['last 2 versions', 'ie >= 8']
@@ -23,10 +24,9 @@ export default {
         ]
       ],
       plugins: [
-        'external-helpers',
-        'transform-object-assign'
+        '@babel/plugin-transform-object-assign'
       ]
     }),
-    uglify()
+    terser()
   ]
 }
