@@ -1,9 +1,50 @@
-const env = require("browser-env")
-env()
+let counts = {
+  document: {
+    add: 0,
+    remove: 0,
+  },
+  node: {
+    add: 0,
+    remove: 0,
+  },
+}
+
+Object.defineProperty(global, "document", {
+  configurable: true,
+  get() {
+    return {
+      createElement() {
+        return {
+          callCount: 0,
+          addEventListener() {
+            counts.node.add++
+          },
+          removeEventListener() {
+            counts.node.remove++
+          },
+          classList: {
+            add() {},
+            remove() {},
+          },
+          style: {},
+        }
+      },
+      addEventListener() {},
+      removeEventListener() {},
+      documentElement: {
+        addEventListener() {
+          counts.document.add++
+        },
+        removeEventListener() {
+          counts.document.remove++
+        },
+      },
+    }
+  },
+})
 
 const test = require("node:test")
 const assert = require("node:assert")
-const sinon = require("sinon")
 const Kinetic = require("../build")
 
 test("it has a lifecycle", () => {
@@ -15,26 +56,24 @@ test("it has a lifecycle", () => {
 
 test("it unbinds all document listeners", () => {
   const node = document.createElement("div")
-  sinon.spy(document.documentElement, "addEventListener")
-  sinon.spy(document.documentElement, "removeEventListener")
   const kinetic = new Kinetic(node)
   kinetic.destroy()
-  const actual = document.documentElement.addEventListener.callCount
-  const expected = document.documentElement.removeEventListener.callCount
-  assert(actual > 0)
-  assert.deepEqual(actual, expected)
+  assert(counts.document.add > 0)
+  assert.deepEqual(counts.document.add, counts.document.remove)
+  counts.document.add = 0
+  counts.document.remove = 0
+  counts.node.add = 0
+  counts.node.remove = 0
 })
 
 test("it unbinds all node listeners", () => {
   const node = document.createElement("div")
-  sinon.spy(node, "addEventListener")
-  sinon.spy(node, "removeEventListener")
   const kinetic = new Kinetic(node)
   kinetic.destroy()
-  const actual = node.addEventListener.callCount
-  const expected = node.removeEventListener.callCount
-  assert(actual > 0)
-  assert.deepEqual(actual, expected)
-  node.addEventListener.restore()
-  node.removeEventListener.restore()
+  assert(counts.node.add > 0)
+  assert.deepEqual(counts.node.add, counts.node.remove)
+  counts.document.add = 0
+  counts.document.remove = 0
+  counts.node.add = 0
+  counts.node.remove = 0
 })
