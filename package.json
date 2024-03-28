@@ -4,7 +4,7 @@
   "description": "kinetic javascript",
   "main": "build/index.js",
   "scripts": {
-    "build": "rollup --config config.js",
+    "build": "rollup --config rollup.config.mjs",
     "prepublishOnly": "npm run build",
     "test": "npm run build && node --test test/unit.js && node --test test/feature.js"
   },
@@ -23,15 +23,15 @@
   },
   "homepage": "https://github.com/buxlabs/kinetic#readme",
   "devDependencies": {
-    "@babel/core": "^7.18.6",
-    "@babel/plugin-transform-object-assign": "^7.18.6",
-    "@babel/preset-env": "^7.18.6",
-    "@rollup/plugin-babel": "^5.3.1",
+    "@babel/core": "^7.24.3",
+    "@babel/plugin-transform-object-assign": "^7.24.1",
+    "@babel/preset-env": "^7.24.3",
+    "@rollup/plugin-babel": "^6.0.4",
     "browser-env": "^3.3.0",
     "express": "^4.19.2",
     "micromatch": "^4.0.5",
     "puppeteer": "^22.6.1",
-    "rollup": "^2.75.7",
+    "rollup": "^4.13.1",
     "rollup-plugin-terser": "^7.0.2",
     "sinon": "^17.0.1"
   }
