@@ -6,7 +6,6 @@
   "scripts": {
     "build": "rollup --config config.js",
     "prepublishOnly": "npm run build",
-    "lint": "standard",
     "test": "npm run build && ava test/unit.js && ava test/feature.js"
   },
   "repository": {
@@ -35,8 +34,7 @@
     "puppeteer": "^15.3.0",
     "rollup": "^2.75.7",
     "rollup-plugin-terser": "^7.0.2",
-    "sinon": "^14.0.0",
-    "standard": "^17.0.0"
+    "sinon": "^14.0.0"
   },
   "ava": {
     "require": [
